@@ -2,7 +2,7 @@ ifndef RM_INCLUDE_DIR
 	RM_INCLUDE_DIR=../
 endif
 
-CFLAGS = -g -O3 -fPIC -D_GNU_SOURCE -std=gnu99 -I./ 
+CFLAGS = -g -O0 -fPIC -D_GNU_SOURCE -std=gnu99 -I./ 
 CFLAGS += -I$(RM_INCLUDE_DIR)
 %.c: %.y
 
@@ -15,14 +15,15 @@ SOURCEDIR=$(abspath $(shell pwd -P)/../)
 CC_SOURCES = $(wildcard $(SOURCEDIR)/*.c) 
 CC_SOURCES += $(wildcard $(SOURCEDIR)/query_parser/*.c) 
 CC_SOURCES += $(wildcard $(SOURCEDIR)/ext/*.c) 
+CC_SOURCES += $(wildcard $(SOURCEDIR)/aggregate/*.c) 
 CC_SOURCES += $(wildcard $(SOURCEDIR)/util/*.c) 
 CC_SOURCES += $(wildcard $(SOURCEDIR)/trie/*.c) 
 CC_SOURCES += $(wildcard $(SOURCEDIR)/dep/thpool/*.c) 
 CC_SOURCES += $(wildcard $(SOURCEDIR)/dep/cndict/*.c)
 
 # Convert all sources to .o files
-DEP_OBJECTS = $(patsubst %.c, %.o, $(CC_SOURCES) )
-CC_DEPS = $(patsubst %.c, %.d, $(CC_SOURCES) )
+DEP_OBJECTS := $(patsubst %.c, %.o, $(CC_SOURCES) )
+CC_DEPS := $(patsubst %.c, %.d, $(CC_SOURCES) )
 
 
 TEST_SOURCES = $(abspath $(wildcard test_*.c))
